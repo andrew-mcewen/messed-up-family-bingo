@@ -1,0 +1,50 @@
+<ActionBar (loaded)="onActionBarLoaded($event)" class="action-bar priority-style" title="">
+    <!-- 
+    Use the NavigationButton as a side-drawer button in Android
+    because ActionItems are shown on the right side of the ActionBar
+    -->
+    <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
+    
+    <!-- 
+    Use the ActionItem for IOS with position set to left. Using the
+    NavigationButton as a side-drawer button in iOS is not possible,
+    because its function is to always navigate back in the application.
+    -->
+    <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()" ios.position="left"></ActionItem>
+</ActionBar>
+
+<GridLayout class="page page-content my-card" columns="*,*,*,*,*" rows="*, *, *, *, *" height="auto">
+
+    <Button [ngClass]="{'active': myCard.tiles[0].active == true }" (tap)="toggleTile(myCard.tiles[0])" class="my-card-tile" row="0" col="0" text="{{ myCard.tiles[0].text }}"></Button>
+    <Button [ngClass]="{'active': myCard.tiles[1].active == true }" (tap)="toggleTile(myCard.tiles[1])" class="my-card-tile" row="0" col="1" text="{{ myCard.tiles[1].text }}"></Button>
+    <Button [ngClass]="{'active': myCard.tiles[2].active == true }" (tap)="toggleTile(myCard.tiles[2])" class="my-card-tile" row="0" col="2" text="{{ myCard.tiles[2].text }}"></Button>
+    <Button [ngClass]="{'active': myCard.tiles[3].active == true }" (tap)="toggleTile(myCard.tiles[3])" class="my-card-tile" row="0" col="3" text="{{ myCard.tiles[3].text }}"></Button>
+    <Button [ngClass]="{'active': myCard.tiles[4].active == true }" (tap)="toggleTile(myCard.tiles[4])" class="my-card-tile" row="0" col="4" text="{{ myCard.tiles[4].text }}"></Button>
+
+    <Button [ngClass]="{'active': myCard.tiles[5].active == true }" (tap)="toggleTile(myCard.tiles[5])" class="my-card-tile" row="1" col="0" text="{{ myCard.tiles[5].text }}"></Button>
+    <Button [ngClass]="{'active': myCard.tiles[6].active == true }" (tap)="toggleTile(myCard.tiles[6])" class="my-card-tile" row="1" col="1" text="{{ myCard.tiles[6].text }}"></Button>
+    <Button [ngClass]="{'active': myCard.tiles[7].active == true }" (tap)="toggleTile(myCard.tiles[7])" class="my-card-tile" row="1" col="2" text="{{ myCard.tiles[7].text }}"></Button>
+    <Button [ngClass]="{'active': myCard.tiles[8].active == true }" (tap)="toggleTile(myCard.tiles[8])" class="my-card-tile" row="1" col="3" text="{{ myCard.tiles[8].text }}"></Button>
+    <Button [ngClass]="{'active': myCard.tiles[9].active == true }" (tap)="toggleTile(myCard.tiles[9])" class="my-card-tile" row="1" col="4" text="{{ myCard.tiles[9].text }}"></Button>
+
+    <Button [ngClass]="{'active': myCard.tiles[10].active == true }" (tap)="toggleTile(myCard.tiles[10])" class="my-card-tile" row="2" col="0" text="{{ myCard.tiles[10].text }}"></Button>
+    <Button [ngClass]="{'active': myCard.tiles[11].active == true }" (tap)="toggleTile(myCard.tiles[11])" class="my-card-tile" row="2" col="1" text="{{ myCard.tiles[11].text }}"></Button>
+    
+    <Button class="my-card-tile fa" row="2" col="2" text="&#xf005;"></Button>
+    
+    <Button [ngClass]="{'active': myCard.tiles[12].active == true }" (tap)="toggleTile(myCard.tiles[12])" class="my-card-tile" row="2" col="3" text="{{ myCard.tiles[12].text }}"></Button>
+    <Button [ngClass]="{'active': myCard.tiles[13].active == true }" (tap)="toggleTile(myCard.tiles[13])" class="my-card-tile" row="2" col="4" text="{{ myCard.tiles[13].text }}"></Button>
+
+    <Button [ngClass]="{'active': myCard.tiles[14].active == true }" (tap)="toggleTile(myCard.tiles[14])" class="my-card-tile" row="3" col="0" text="{{ myCard.tiles[14].text }}"></Button>
+    <Button [ngClass]="{'active': myCard.tiles[15].active == true }" (tap)="toggleTile(myCard.tiles[15])" class="my-card-tile" row="3" col="1" text="{{ myCard.tiles[15].text }}"></Button>
+    <Button [ngClass]="{'active': myCard.tiles[16].active == true }" (tap)="toggleTile(myCard.tiles[16])" class="my-card-tile" row="3" col="2" text="{{ myCard.tiles[16].text }}"></Button>
+    <Button [ngClass]="{'active': myCard.tiles[17].active == true }" (tap)="toggleTile(myCard.tiles[17])" class="my-card-tile" row="3" col="3" text="{{ myCard.tiles[17].text }}"></Button>
+    <Button [ngClass]="{'active': myCard.tiles[18].active == true }" (tap)="toggleTile(myCard.tiles[18])" class="my-card-tile" row="3" col="4" text="{{ myCard.tiles[18].text }}"></Button>
+
+    <Button [ngClass]="{'active': myCard.tiles[19].active == true }" (tap)="toggleTile(myCard.tiles[19])" class="my-card-tile" row="4" col="0" text="{{ myCard.tiles[19].text }}"></Button>
+    <Button [ngClass]="{'active': myCard.tiles[20].active == true }" (tap)="toggleTile(myCard.tiles[20])" class="my-card-tile" row="4" col="1" text="{{ myCard.tiles[20].text }}"></Button>
+    <Button [ngClass]="{'active': myCard.tiles[21].active == true }" (tap)="toggleTile(myCard.tiles[21])" class="my-card-tile" row="4" col="2" text="{{ myCard.tiles[21].text }}"></Button>
+    <Button [ngClass]="{'active': myCard.tiles[22].active == true }" (tap)="toggleTile(myCard.tiles[22])" class="my-card-tile" row="4" col="3" text="{{ myCard.tiles[22].text }}"></Button>
+    <Button [ngClass]="{'active': myCard.tiles[23].active == true }" (tap)="toggleTile(myCard.tiles[23])" class="my-card-tile" row="4" col="4" text="{{ myCard.tiles[23].text }}"></Button>
+
+</GridLayout>

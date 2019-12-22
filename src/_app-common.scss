@@ -1,0 +1,95 @@
+// Place any CSS rules you want to apply on both iOS and Android here.
+// This is where the vast majority of your CSS code goes.
+// Font icon class
+.fa {
+    font-family: "FontAwesome5";
+}
+
+.far {
+    font-family: "Font Awesome 5 Free-Regular-400";
+}
+
+.fas {
+    font-family: "Font Awesome 5 Free-Solid-900"
+}
+
+// Common page class
+.page-content {
+
+    padding-top: 0dp;
+
+    .page-placeholder {
+        color: $page-icon-color;
+        font-size: $page-content-placeholder-font-size;
+        vertical-align: center;
+        horizontal-align: center;
+    }
+
+    .page-icon {
+        font-size: 72;
+        vertical-align: top;
+        horizontal-align: center;
+        color: $page-icon-color;
+        margin-top: 20%;
+    }
+}
+
+ // Drawer navigation custom styles
+$sidedrawer-list-item-offset-left: 15;
+$sidedrawer-list-icon-offset: 10;
+$sidedrawer-list-icon-size: 20;
+
+.sidedrawer {
+    &.sidedrawer-left {
+        background-color: $ab-background;
+
+        .sidedrawer-header-logo {
+            color: white;
+            font-family: "Sriracha-Regular";
+            font-size: 22;
+            font-weight: bold;
+            margin-bottom: 0;
+            padding: 0;
+        }
+    }
+
+    .sidedrawer-header {
+        margin: 60 0 0 0;
+        padding: 30;
+        background-color: $ab-background;
+    }
+
+    .sidedrawer-content {
+        background-color: $side-drawer-background;
+
+        $sidedrawer-list-item-offset-left: 15;
+        $sidedrawer-list-icon-offset: 10;
+        $sidedrawer-list-icon-size: 20;
+
+        .sidedrawer-list-item {
+            padding-left: $sidedrawer-list-item-offset-left;
+            Label {
+                vertical-align: center;
+                color: $blue-dark;
+            }
+            .fa {
+                width: $sidedrawer-list-icon-size;
+                margin-right: $sidedrawer-list-icon-offset;
+            }
+            .far {
+                width: $sidedrawer-list-icon-size;
+                margin-right: $sidedrawer-list-icon-offset;
+            }
+            .fas {
+                width: $sidedrawer-list-icon-size;
+                margin-right: $sidedrawer-list-icon-offset;
+            }
+            &.selected {
+                background-color: $item-active-background;
+                Label {
+                    color: $item-active-color;
+                }
+            }
+        }
+    }
+}

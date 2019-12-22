@@ -1,0 +1,42 @@
+<!--
+RadSideDrawer is a UI component part of the Progress NativeScript UI set of components.
+Learn more about the RadSideDrawer UI component and how it can be customized in this documentation article:
+https://docs.nativescript.org/angular/ui/professional-ui-components/ng-SideDrawer/getting-started
+-->
+<RadSideDrawer [drawerTransition]="sideDrawerTransition">
+    <GridLayout tkDrawerContent rows="auto, *" class="sidedrawer sidedrawer-left">
+        
+        <StackLayout row="0" class="sidedrawer-header">
+            <Label class="sidedrawer-header-logo" text="MESSED UP FAMILY"></Label>
+            <Label class="sidedrawer-header-logo" text="BINGO GAME"></Label>
+        </StackLayout>
+    
+        <ScrollView row="1" class="sidedrawer-content">
+            <StackLayout>
+                <GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/play')" (tap)="onNavItemTap('/play')">
+                    <Label col="0" text="&#xf005;" class="fa"></Label>
+                    <Label col="1" text="PLAY" class="p-r-10"></Label>
+                </GridLayout>
+
+                <GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/make-card')" (tap)="onNavItemTap('/make-card')">
+                    <Label col="0" text="&#xf0c8;" class="fa"></Label>
+                    <Label col="1" text="MAKE MY CARD" class="p-r-10"></Label>
+                </GridLayout>
+
+                <GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/about')" (tap)="onNavItemTap('/about')">
+                    <Label col="0" text="&#xf059;" class="fa"></Label>
+                    <Label col="1" text="ABOUT THIS GAME" class="p-r-10"></Label>
+                </GridLayout>
+
+                <GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/terms')" (tap)="onNavItemTap('/terms')">
+                    <Label col="0" text="&#xf516;" class="fas"></Label>
+                    <Label col="1" text="TERMS/DISCLAIMERS" class="p-r-10"></Label>
+                </GridLayout>
+
+
+            </StackLayout>
+        </ScrollView>
+    </GridLayout>
+
+    <page-router-outlet tkMainContent class="page page-content"></page-router-outlet>
+</RadSideDrawer>

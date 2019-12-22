@@ -1,0 +1,34 @@
+<GridLayout class="page page-content">
+    <ActionBar class="action-bar" title="">
+        <!-- 
+        Use the NavigationButton as a side-drawer button in Android
+        because ActionItems are shown on the right side of the ActionBar
+        -->
+        <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
+        <!-- 
+        Use the ActionItem for IOS with position set to left. Using the
+        NavigationButton as a side-drawer button in iOS is not possible,
+        because its function is to always navigate back in the application.
+        -->
+        <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()" ios.position="left"></ActionItem>
+    </ActionBar>
+
+    <Accordion #accordion height="100%" allowMultiple="true" childItems="tiles" [items]="myCard.tileSets">
+		<ng-template let-i="index" let-tileSet="item" acTemplateKey="title">
+			<StackLayout>
+				<Label class="card-items-category" [text]="tileSet.name"></Label>
+			</StackLayout>
+        </ng-template>
+        
+        <ng-template let-i="index" let-tile="item" acTemplateKey="content" class="list-view-item">
+			<StackLayout>
+				<Label class="card-item" [ngClass]="{'active': tile.inPlay == true }" [text]="tile.text" (tap)="onItemTap(tile)"></Label>
+			</StackLayout>
+        </ng-template>        
+	</Accordion>
+        
+    
+    <FAB *ngIf="tileCount < 25" text="{{tileCount}}/25" rippleColor="#f1f1f1" class="fab-button"></FAB>
+    <FAB *ngIf="tileCount == 25" (tap)="saveCard()" text="play" rippleColor="#f1f1f1" class="fab-button"></FAB>
+
+</GridLayout>
