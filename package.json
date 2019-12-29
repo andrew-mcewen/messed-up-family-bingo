@@ -1,6 +1,6 @@
 {
   "nativescript": {
-    "id": "org.nativescript.familydysfunctionbingo",
+    "id": "dev.andrewmcewen.messedupfamilybingo",
     "tns-ios": {
       "version": "6.1.0"
     },

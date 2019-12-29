@@ -1,5 +1,5 @@
 {
-  "appId": "org.nativescript.messedupfamilybingo",
+  "appId": "dev.andrewmcewen.messedupfamilybingo",
   "minSdkVersion": 28,
   "targetSdkVersion": 28
 }
