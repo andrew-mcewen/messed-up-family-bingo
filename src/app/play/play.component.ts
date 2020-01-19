@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from "@angular/core";
 import { isAndroid } from "tns-core-modules/platform";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
+import * as dialogs from "tns-core-modules/ui/dialogs";
 import { Page } from "tns-core-modules/ui/page";
 import * as app from "tns-core-modules/application";
 
@@ -24,6 +25,7 @@ export class PlayComponent implements OnInit, AfterViewInit {
     myCardValues: Array<object>;
     defaultCard: any;
     myCard: any;
+    freeTileActive: boolean;
     
     
     constructor(private page: Page, private cardService: CardService) {
@@ -49,14 +51,12 @@ export class PlayComponent implements OnInit, AfterViewInit {
             }
         });
         
-        // Init your component properties here
         this.myCardValues = [];
         this.myCard = this.cardService.getMyCard();
         const self = this;
 
-        console.log('My tiles: ', JSON.stringify(this.myCard.tiles, null, 2));
+        //console.log('My tiles: ', JSON.stringify(this.myCard.tiles, null, 2));
 
-        //console.log('My tile sets: ', JSON.stringify(this.myCard.tileSets, null, 2));
         this.myCard.tileSets.forEach(function(tileSet){
             tileSet.tiles.forEach(function(tile){
                 if(tile.inPlay == true){
@@ -64,9 +64,6 @@ export class PlayComponent implements OnInit, AfterViewInit {
                 }
             })
         });
-
-        console.log('myCard values: ', JSON.stringify(this.myCardValues, null, 2));
-        console.log('myCard values count: ', this.myCardValues.length);
     }
 
     onActionBarLoaded(args: EventData): void {
@@ -83,5 +80,61 @@ export class PlayComponent implements OnInit, AfterViewInit {
     toggleTile(tile): void {
         tile.active = !tile.active;
         this.cardService.saveCard(this.myCard.id, this.myCard)
+        this.checkForBingo();
+    }
+
+    toggleFreeTile(freeTile): void {
+        freeTile.active = !freeTile.active;
+        this.cardService.saveCard(this.myCard.id, this.myCard)
+        this.checkForBingo();
+    }
+
+    checkForBingo(): void {
+        let scoredBingo;
+
+        //4 squares
+        if(this.myCard.tiles[0].active
+            && this.myCard.tiles[4].active 
+            && this.myCard.tiles[19].active 
+            && this.myCard.tiles[23].active) {
+                scoredBingo = true;
+        }
+
+        //Diagonal
+        if(this.myCard.tiles[0].active
+            && this.myCard.tiles[6].active 
+            && this.myCard.freeTile.active == true
+            && this.myCard.tiles[17].active 
+            && this.myCard.tiles[23].active) {
+                scoredBingo = true;
+        }
+
+        //Diagonal
+        if(this.myCard.tiles[4].active
+            && this.myCard.tiles[8].active
+            && this.myCard.freeTile.active == true
+            && this.myCard.tiles[15].active 
+            && this.myCard.tiles[19].active) {
+                scoredBingo = true;
+        }
+
+        if(scoredBingo){
+            dialogs.confirm({
+                title: "BINGO",
+                message: "Yikes. This family is messed up.",
+                okButtonText: "HERE WE GO AGAIN",
+            }).then(result => {
+                this.clearCard();
+            });
+        }
+    }
+
+    clearCard(): void {
+        for(let tile of this.myCard.tiles){
+            tile.active = false;
+        }
+        this.myCard.freeTile.active = false;
+        this.cardService.saveCard(this.myCard.id, this.myCard)
+        this.checkForBingo();
     }
 }

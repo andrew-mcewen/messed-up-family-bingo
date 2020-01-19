@@ -8,7 +8,6 @@ export class CardService {
 
   private database: any;
   private myCard: any;
-  private myTiles: any;
 
   constructor() { 
     this.database = new Couchbase("data");
@@ -19,30 +18,30 @@ export class CardService {
           id: 'myCard',
           name: 'My Card',
           tiles: [
-            { text: 'someone drinks too much', active: false, inPlay: true},
-            { text: 'someone says a racist comment', active: false, inPlay: true},
-            { text: "someone doesn't show up", active: false, inPlay: true},
-            { text: 'someone says a sexist comment', active: false, inPlay: true},
-            { text: 'someone gets hit', active: false, inPlay: true},
-            { text: 'the cops show up', active: false, inPlay: true},
-            { text: 'someone watches tv the entire time', active: false, inPlay: true},
-            { text: 'someone steals from someone else', active: false, inPlay: true},
-            { text: 'someone brings a guest without asking', active: false, inPlay: true},
+            { text: 'racist comment', active: false, inPlay: true},
+            { text: 'inappropriate joke', active: false, inPlay: true},
+            { text: "the F-bomb", active: false, inPlay: true},
+            { text: 'mansplaining', active: false, inPlay: true},
+            { text: 'TMI (too much information)', active: false, inPlay: true},
+            { text: 'When are you two getting married?', active: false, inPlay: true},
+            { text: 'inability to apologize', active: false, inPlay: true},
+            { text: 'comment undermining my achievements', active: false, inPlay: true},
+            { text: 'storming out', active: false, inPlay: true},
             { text: 'arguing about politics', active: false, inPlay: true},
-            { text: 'arguing about religion', active: false, inPlay: true},
-            { text: 'someone starts crying', active: false, inPlay: true},
-            { text: 'someone is on drugs', active: false, inPlay: true},
-            { text: 'someone falls asleep at the wrong time', active: false, inPlay: true},
-            { text: 'someone gets hurt riding a scooter', active: false, inPlay: true},
-            { text: 'someone talks too much', active: false, inPlay: true},
-            { text: 'someone gets caught smoking', active: false, inPlay: true},
-            { text: 'someone asks about your sex life', active: false, inPlay: true},
-            { text: 'someone gossips about another family member', active: false, inPlay: true},
-            { text: 'someone makes a comment about your weight', active: false, inPlay: true},
-            { text: 'somone burns the dinner', active: false, inPlay: true},
-            { text: 'a pet gets loose', active: false, inPlay: true},
-            { text: 'someone breaks a thing', active: false, inPlay: true},
-            { text: 'someone asks to borrow money', active: false, inPlay: true}
+            { text: 'clearly avoiding the elephant in the room', active: false, inPlay: true},
+            { text: 'drunk adults peeing / pooping / puking', active: false, inPlay: true},
+            { text: 'awkward silence', active: false, inPlay: true},
+            { text: 'telling the same story over and over again', active: false, inPlay: true},
+            { text: 'excessive PDA (public displays of affection)', active: false, inPlay: true},
+            { text: 'unhealthy diet culture', active: false, inPlay: true},
+            { text: 'unsolicited dating advice', active: false, inPlay: true},
+            { text: 'sneaking out to smoke / drink', active: false, inPlay: true},
+            { text: 'Are you really going to eat that?', active: false, inPlay: true},
+            { text: 'being rude to restaurant staff', active: false, inPlay: true},
+            { text: 'pounding a table for emphasis', active: false, inPlay: true},
+            { text: 'unwanted hug', active: false, inPlay: true},
+            { text: 'fishing for compliments', active: false, inPlay: true},
+            { text: 'espousing a conspiracy theory', active: false, inPlay: true}
           ],
           tileSets: [
             {
@@ -84,7 +83,7 @@ export class CardService {
                   inPlay: false
                 },
                 {
-                  text: 'comment undermining my accomplishments',
+                  text: 'comment undermining my achievements',
                   active: false,
                   inPlay: false
                 },
@@ -94,17 +93,17 @@ export class CardService {
                   inPlay: false
                 },
                 {
-                  text: 'commenting on my clothing',
+                  text: 'a comment about my clothing',
                   active: false,
                   inPlay: false
                 },
                 {
-                  text: 'commenting on my weight',
+                  text: 'a comment about my weight',
                   active: false,
                   inPlay: false
                 },
                 {
-                  text: 'someone sharing TMI (too much information)',
+                  text: 'TMI (too much information)',
                   active: false,
                   inPlay: false
                 },
@@ -119,7 +118,7 @@ export class CardService {
               name: 'MESSED UP QUESTIONS',
               tiles: [
                 {
-                  text: 'When are you going to have kids?',
+                  text: 'When are you having kids?',
                   active: false,
                   inPlay: false
                 },
@@ -149,7 +148,7 @@ export class CardService {
               name: 'MESSED UP BEHAVIORS',
               tiles: [
                 {
-                  text: 'someone drinking too much',
+                  text: 'drinking too much',
                   active: false,
                   inPlay: false
                 },
@@ -194,17 +193,17 @@ export class CardService {
                   inPlay: false
                 },
                 {
-                  text: 'someone telling the same story over and over again',
+                  text: 'telling the same story over and over again',
                   active: false,
                   inPlay: false
                 },
                 {
-                  text: 'spilling food / drink excessively',
+                  text: 'spilling food / drinking excessively',
                   active: false,
                   inPlay: false
                 },
                 {
-                  text: 'an argument that gets out of hand',
+                  text: 'an argument gets out of hand',
                   active: false,
                   inPlay: false
                 },
@@ -229,17 +228,17 @@ export class CardService {
                   inPlay: false
                 },
                 {
-                  text: 'someone is excessively late or no-shows',
+                  text: 'excessive lateness / no-show',
                   active: false,
                   inPlay: false
                 },
                 {
-                  text: 'unwelcomed hug',
+                  text: 'unwanted hug',
                   active: false,
                   inPlay: false
                 },
                 {
-                  text: 'a hug that lasts too long',
+                  text: 'hug that lasts too long',
                   active: false,
                   inPlay: false
                 },
@@ -299,12 +298,12 @@ export class CardService {
               name: 'MESSED UP SITUATIONS',
               tiles: [
                 {
-                  text: 'awkward moment when no one wants to clean up',
+                  text: 'no one wants to clean up',
                   active: false,
                   inPlay: false
                 },
                 {
-                  text: 'uncomfortable silence',
+                  text: 'awkward silence',
                   active: false,
                   inPlay: false
                 },
@@ -334,22 +333,22 @@ export class CardService {
                   inPlay: false
                 },
                 {
-                  text: 'someone is brought to tears',
+                  text: 'making someone cry',
                   active: false,
                   inPlay: false
                 },
                 {
-                  text: 'someone sneaks out to smoke / drink',
+                  text: 'sneaking out to smoke / drink',
                   active: false,
                   inPlay: false
                 },
                 {
-                  text: 'someone makes up an excuse to leave early',
+                  text: 'making up an excuse to leave early',
                   active: false,
                   inPlay: false
                 },
                 {
-                  text: 'everyone clearly avoiding the elephant in the room',
+                  text: 'clearly avoiding the elephant in the room',
                   active: false,
                   inPlay: false
                 }                              
@@ -379,12 +378,12 @@ export class CardService {
                   inPlay: false
                 },
                 {
-                  text: 'someone espousing a conspiracy theory',
+                  text: 'espousing a conspiracy theory',
                   active: false,
                   inPlay: false
                 },
                 {
-                  text: 'someone fishing for compliments',
+                  text: 'fishing for compliments',
                   active: false,
                   inPlay: false
                 },
@@ -395,7 +394,12 @@ export class CardService {
                 }                 
               ]  
             }
-          ]
+          ],
+          freeTile: { 
+            text: '', 
+            active: false, 
+            inPlay: true
+          }
         }
         this.makeCard(this.myCard.id, this.myCard)
     }
@@ -415,5 +419,4 @@ export class CardService {
   public getMyCard() {
     return this.database.getDocument('myCard');
   }
-
 }

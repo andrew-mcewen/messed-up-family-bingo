@@ -1,5 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
+import { RouterExtensions } from "nativescript-angular/router";
+
 import * as app from "tns-core-modules/application";
 
 import { CardService } from './../card.service';
@@ -19,23 +21,20 @@ import { Repeater } from "tns-core-modules/ui/repeater";
 })
 export class MakeCardComponent implements OnInit {
 
-    private myCard: any;
-    private myTiles: any;
-    private tileCount: number;
+    myCard: any;
+    myTiles: any;
+    tileCount: number;
 
     @ViewChild('accordion', { static: false}) accordion: ElementRef;
 
 
-    constructor(private cardService: CardService) {
-        // Use the component constructor to inject providers.
-    }
+    constructor(private cardService: CardService, private routerExtensions: RouterExtensions) {}
 
     ngOnInit(): void {
-        // Init your component properties here.
         this.tileCount = 0;
         this.myTiles = [];
         this.myCard = this.cardService.getMyCard();
-        console.log('My card: , ', JSON.stringify(this.myCard, null, 2));
+        //console.log('My card: , ', JSON.stringify(this.myCard, null, 2));
 
         const self = this;
         this.myCard.tileSets.forEach(function(tileSet){
@@ -45,7 +44,6 @@ export class MakeCardComponent implements OnInit {
                 }
             })
         });
-        console.log('tileCount: ', this.tileCount);
     }
 
     public onDrawerButtonTap(): void {
@@ -57,11 +55,10 @@ export class MakeCardComponent implements OnInit {
         if(tile.inPlay == true && this.tileCount != 0){
             tile.inPlay = false;
             this.tileCount--;
-        } else if(tile.inPlay == false && this.tileCount != 25){
+        } else if(tile.inPlay == false && this.tileCount != 24){
             tile.inPlay = true;
             this.tileCount++;
         }
-        console.log(this.tileCount);
         this.cardService.saveCard(this.myCard.id, this.myCard);
     }
 
@@ -77,7 +74,13 @@ export class MakeCardComponent implements OnInit {
         });
 
         this.cardService.saveCard(this.myCard.id, this.myCard);
-        console.log('Card saved!!!');
+        //console.log('Card saved!!!');
+
+        this.routerExtensions.navigate(['/play'], {
+            transition: {
+                name: "fade"
+            }
+        });
     }
 
     public headerTemplateSelector = (item: any, index: number, items: any) => {
@@ -94,6 +97,5 @@ export class MakeCardComponent implements OnInit {
 
     public footerTemplateSelector = (item: any, index: number, items: any) => {
         return index % 2 === 0 ? 'footer-even' : 'footer-odd';
-    }
-    
+    }    
 }

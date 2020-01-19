@@ -1,8 +1,10 @@
 .my-card-tile {
-    margin: -4dp -3dp -4dp -3dp;
-    padding: 8dp;
+    margin: -5dp -3dp;
+    padding: 6dp;
     background-color: lightgray;
-    font-size: 11;
+    text-align: center;
+    text-wrap: true;
+    font-size: 10pt;
 }
 
 .active {
@@ -11,5 +13,5 @@
 }
 
 .my-card {
-    margin: 10dp;
+
 }

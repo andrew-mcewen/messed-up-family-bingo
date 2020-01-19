@@ -1,4 +1,4 @@
-<GridLayout class="page page-content">
+<GridLayout height="auto" class="page page-content">
     <ActionBar class="action-bar" title="">
         <!-- 
         Use the NavigationButton as a side-drawer button in Android
@@ -11,6 +11,7 @@
         because its function is to always navigate back in the application.
         -->
         <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()" ios.position="left"></ActionItem>
+        <Label text="{{tileCount}} / 24"></Label>    
     </ActionBar>
 
     <Accordion #accordion height="100%" allowMultiple="true" childItems="tiles" [items]="myCard.tileSets">
@@ -27,8 +28,5 @@
         </ng-template>        
 	</Accordion>
         
-    
-    <FAB *ngIf="tileCount < 25" text="{{tileCount}}/25" rippleColor="#f1f1f1" class="fab-button"></FAB>
-    <FAB *ngIf="tileCount == 25" (tap)="saveCard()" text="play" rippleColor="#f1f1f1" class="fab-button"></FAB>
-
+    <FAB *ngIf="tileCount == 24" (tap)="saveCard()" text="play" rippleColor="#f1f1f1" class="fab-button"></FAB>
 </GridLayout>

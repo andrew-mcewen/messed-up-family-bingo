@@ -2,7 +2,7 @@
   "nativescript": {
     "id": "dev.andrewmcewen.messedupfamilybingo",
     "tns-ios": {
-      "version": "6.3.0"
+      "version": "6.1.0"
     },
     "tns-android": {
       "version": "6.3.0"

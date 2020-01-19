@@ -30,7 +30,7 @@
     <Button [ngClass]="{'active': myCard.tiles[10].active == true }" (tap)="toggleTile(myCard.tiles[10])" class="my-card-tile" row="2" col="0" text="{{ myCard.tiles[10].text }}"></Button>
     <Button [ngClass]="{'active': myCard.tiles[11].active == true }" (tap)="toggleTile(myCard.tiles[11])" class="my-card-tile" row="2" col="1" text="{{ myCard.tiles[11].text }}"></Button>
     
-    <Button class="my-card-tile fa" row="2" col="2" text="&#xf005;"></Button>
+    <Button fontSize="20" [ngClass]="{'active': myCard.freeTile.active == true }" (tap)="toggleFreeTile(myCard.freeTile)" class="my-card-tile fa" row="2" col="2" text="&#xf11a;"></Button>
     
     <Button [ngClass]="{'active': myCard.tiles[12].active == true }" (tap)="toggleTile(myCard.tiles[12])" class="my-card-tile" row="2" col="3" text="{{ myCard.tiles[12].text }}"></Button>
     <Button [ngClass]="{'active': myCard.tiles[13].active == true }" (tap)="toggleTile(myCard.tiles[13])" class="my-card-tile" row="2" col="4" text="{{ myCard.tiles[13].text }}"></Button>
