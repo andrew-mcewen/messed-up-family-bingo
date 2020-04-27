@@ -1,8 +1,11 @@
+@import '../../app-variables';
+
 .fab-button {
     height: 70;
     width: 70; /// this is required on iOS - Android does not require width so you might need to adjust styles
     margin: 15;
-    background-color: gray;
+    background-color: #3c1b43;
+    color: white;
     horizontal-align: right;
     vertical-align: bottom;
   }
@@ -11,22 +14,25 @@
     height: 100vh + 3; 
     text-align: center;
     font-size: 28dp;
-    font-family: "Sriracha", "Sriracha-Regular";
-    background-color: lightgray;
-    color: gray;
+    font-weight: bold;
+    background-color: #f0d3f7;
+    color: #3c1b43;
     padding: 30dp 0dp 0dp 0dp;
   }
 
   .card-item {
-    height: 40dp;
-    background-color: white;
-    color: darkslategray;
-    padding-left: 20dp;
-    padding-top: 10dp; 
+    height: 80dp;
+    background-color: $primary;
+    color: #3c1b43;
+    font-size: 18;
+    font-family: "Sriracha", "Sriracha-Regular";
+    padding-left: 25dp;
+    padding-right: 25dp;
+    padding-top: 15dp; 
   }
 
   .active {
-    background-color: gray;
+    background-color: #8bb7b3;
     color: white;
   }
 

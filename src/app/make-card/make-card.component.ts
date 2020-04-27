@@ -1,5 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
+import * as dialogs from "tns-core-modules/ui/dialogs";
 import { RouterExtensions } from "nativescript-angular/router";
 
 import * as app from "tns-core-modules/application";
@@ -22,7 +23,6 @@ import { Repeater } from "tns-core-modules/ui/repeater";
 export class MakeCardComponent implements OnInit {
 
     myCard: any;
-    myTiles: any;
     tileCount: number;
 
     @ViewChild('accordion', { static: false}) accordion: ElementRef;
@@ -32,9 +32,9 @@ export class MakeCardComponent implements OnInit {
 
     ngOnInit(): void {
         this.tileCount = 0;
-        this.myTiles = [];
-        this.myCard = this.cardService.getMyCard();
-        //console.log('My card: , ', JSON.stringify(this.myCard, null, 2));
+
+        this.myCard = this.cardService.getBingoCardData();
+        console.log('My card: ', JSON.stringify(this.myCard.tilesInPlay.length, null, 2));
 
         const self = this;
         this.myCard.tileSets.forEach(function(tileSet){
@@ -44,6 +44,14 @@ export class MakeCardComponent implements OnInit {
                 }
             })
         });
+
+        dialogs.confirm({
+            title: "HOW TO MAKE YOUR CARD",
+            message: "Tap to select 24 items from this messed up list.\n\n When you have enough messed up items, tap the play button.\n\nUm... Have fun?",
+            okButtonText: "Okay",
+        }).then(result => {
+            
+        });
     }
 
     public onDrawerButtonTap(): void {
@@ -51,30 +59,41 @@ export class MakeCardComponent implements OnInit {
         sideDrawer.showDrawer();
     }
 
-    public onItemTap(tile): void {
+    public onItemTap(tile: any): void {
         if(tile.inPlay == true && this.tileCount != 0){
             tile.inPlay = false;
             this.tileCount--;
         } else if(tile.inPlay == false && this.tileCount != 24){
             tile.inPlay = true;
             this.tileCount++;
+        } else if (tile.inPlay == false && this.tileCount == 24){
+            dialogs.confirm({
+                message: "You can only pick 24 messed up things.",
+                okButtonText: "Okay",
+            }).then(result => {
+                
+            });
         }
-        this.cardService.saveCard(this.myCard.id, this.myCard);
+        
+        this.cardService.saveBingoCardData(this.myCard);
     }
 
     public saveCard(): void {
-        this.myCard.tiles = [];
-        const self = this;
+        let tilesInPlay = [];
+
         this.myCard.tileSets.forEach(function(tileSet){
-            tileSet.tiles.forEach(function(tile){
-                if(tile.inPlay == true){
-                    self.myCard.tiles.push(tile);
+            tileSet.tiles.forEach(function(tile: any){
+                if(tile.inPlay){
+                    tilesInPlay.push(tile);
                 }
             });
         });
 
-        this.cardService.saveCard(this.myCard.id, this.myCard);
-        //console.log('Card saved!!!');
+        tilesInPlay.splice(12, 0, {active: false, inPlay: true, text: 'free'});
+
+        this.myCard.tilesInPlay = tilesInPlay;
+        this.cardService.saveBingoCardData(this.myCard);
+        console.log('Card saved!!!');
 
         this.routerExtensions.navigate(['/play'], {
             transition: {

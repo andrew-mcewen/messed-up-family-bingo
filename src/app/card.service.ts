@@ -7,42 +7,16 @@ import { Couchbase } from 'nativescript-couchbase-plugin';
 export class CardService {
 
   private database: any;
-  private myCard: any;
+  private bingoCardData: any;
 
   constructor() { 
     this.database = new Couchbase("data");
-    this.myCard = this.getMyCard();
+    this.bingoCardData = this.getBingoCardData();
 
-    if(!this.myCard) {
-        this.myCard = {
-          id: 'myCard',
-          name: 'My Card',
-          tiles: [
-            { text: 'racist comment', active: false, inPlay: true},
-            { text: 'inappropriate joke', active: false, inPlay: true},
-            { text: "the F-bomb", active: false, inPlay: true},
-            { text: 'mansplaining', active: false, inPlay: true},
-            { text: 'TMI (too much information)', active: false, inPlay: true},
-            { text: 'When are you two getting married?', active: false, inPlay: true},
-            { text: 'inability to apologize', active: false, inPlay: true},
-            { text: 'comment undermining my achievements', active: false, inPlay: true},
-            { text: 'storming out', active: false, inPlay: true},
-            { text: 'arguing about politics', active: false, inPlay: true},
-            { text: 'clearly avoiding the elephant in the room', active: false, inPlay: true},
-            { text: 'drunk adults peeing / pooping / puking', active: false, inPlay: true},
-            { text: 'awkward silence', active: false, inPlay: true},
-            { text: 'telling the same story over and over again', active: false, inPlay: true},
-            { text: 'excessive PDA (public displays of affection)', active: false, inPlay: true},
-            { text: 'unhealthy diet culture', active: false, inPlay: true},
-            { text: 'unsolicited dating advice', active: false, inPlay: true},
-            { text: 'sneaking out to smoke / drink', active: false, inPlay: true},
-            { text: 'Are you really going to eat that?', active: false, inPlay: true},
-            { text: 'being rude to restaurant staff', active: false, inPlay: true},
-            { text: 'pounding a table for emphasis', active: false, inPlay: true},
-            { text: 'unwanted hug', active: false, inPlay: true},
-            { text: 'fishing for compliments', active: false, inPlay: true},
-            { text: 'espousing a conspiracy theory', active: false, inPlay: true}
-          ],
+    if(!this.bingoCardData) {
+        this.bingoCardData = {
+          id: 'bingoCardData',
+          playForBlackout: false,
           tileSets: [
             {
               name: 'MESSED UP COMMENTS',
@@ -50,67 +24,67 @@ export class CardService {
                 {
                   text: 'racist comment',
                   active: false,
-                  inPlay: false
+                  inPlay: true
                 },
                 {
                   text: 'sexist comment',
                   active: false,
-                  inPlay: false
+                  inPlay: true
                 },
                 {
                   text: 'homophobic comment',
                   active: false,
-                  inPlay: false
+                  inPlay: true
                 },
                 {
                   text: 'politically inappropriate comment',
                   active: false,
-                  inPlay: false
+                  inPlay: true
                 },
                 {
                   text: 'inappropriate comments about money',
                   active: false,
-                  inPlay: false
+                  inPlay: true
                 },
                 {
                   text: 'inappropriate joke',
                   active: false,
-                  inPlay: false
+                  inPlay: true
                 },
                 {
                   text: "disparaging comment about a group I'm a member of",
                   active: false,
-                  inPlay: false
+                  inPlay: true
                 },
                 {
                   text: 'comment undermining my achievements',
                   active: false,
-                  inPlay: false
+                  inPlay: true
                 },
                 {
                   text: 'the F-bomb',
                   active: false,
-                  inPlay: false
+                  inPlay: true
                 },
                 {
                   text: 'a comment about my clothing',
                   active: false,
-                  inPlay: false
+                  inPlay: true
                 },
                 {
                   text: 'a comment about my weight',
                   active: false,
-                  inPlay: false
+                  inPlay: true
                 },
                 {
                   text: 'TMI (too much information)',
                   active: false,
-                  inPlay: false
+                  inPlay: true
                 },
                 {
                   text: 'mansplaining',
                   active: false,
-                  inPlay: false
+                  inPlay: true
                 }
               ]
             },
@@ -120,27 +94,27 @@ export class CardService {
                 {
                   text: 'When are you having kids?',
                   active: false,
-                  inPlay: false
+                  inPlay: true
                 },
                 {
                   text: 'When are you two getting married?',
                   active: false,
-                  inPlay: false
+                  inPlay: true
                 },
                 {
                   text: 'Are you pregnant / when is your due date?',
                   active: false,
-                  inPlay: false
+                  inPlay: true
                 },
                 {
                   text: 'Are you really going to eat that?',
                   active: false,
-                  inPlay: false
+                  inPlay: true
                 },
                 {
                   text: "Why aren't you finishing that?",
                   active: false,
-                  inPlay: false
+                  inPlay: true
                 }              
               ]  
             },
@@ -150,37 +124,37 @@ export class CardService {
                 {
                   text: 'drinking too much',
                   active: false,
-                  inPlay: false
+                  inPlay: true
                 },
                 {
                   text: 'being rude to restaurant staff',
                   active: false,
-                  inPlay: false
+                  inPlay: true
                 },
                 {
                   text: 'twisting around a previous comment',
                   active: false,
-                  inPlay: false
+                  inPlay: true
                 },
                 {
                   text: 'victim blaming',
                   active: false,
-                  inPlay: false
+                  inPlay: true
                 },
                 {
                   text: 'all or nothing thinking',
                   active: false,
-                  inPlay: false
+                  inPlay: true
                 },
                 {
                   text: 'pets jumping on me',
                   active: false,
-                  inPlay: false
+                  inPlay: true
                 },
                 {
                   text: "pets peeing / pooping / puking",
                   active: false,
-                  inPlay: false
+                  inPlay: true
                 },
                 {
                   text: 'children peeing / pooping / puking',
@@ -395,28 +369,75 @@ export class CardService {
               ]  
             }
           ],
-          freeTile: { 
-            text: '', 
-            active: false, 
-            inPlay: true
-          }
-        }
-        this.makeCard(this.myCard.id, this.myCard)
+          tilesInPlay: [{
+            active: false,
+            inPlay: true,
+            text: 'free'
+          }]
+        };
+
+        this.initializeDatabase();
     }
   }
 
-  private makeCard(cardId : string, cardData: any) {
-    this.database.createDocument(cardData, cardId);
+  private initializeDatabase() {
+    this.database.createDocument(this.bingoCardData, this.bingoCardData.id);
   }
 
-  public saveCard(cardId: string, cardData: any) {
-    let document = this.database.getDocument(cardId);
-    if(document){
-      this.database.updateDocument(cardId, cardData);
+  public saveBingoCardData(bingoCardData: any) {
+    if (this.database.getDocument(bingoCardData.id)) {
+      this.database.updateDocument(bingoCardData.id, bingoCardData);
     }
   }
 
-  public getMyCard() {
-    return this.database.getDocument('myCard');
+  public saveBingoGameData(bingoCardTilesInPlay: Array<object>): void {
+    this.bingoCardData.tilesInPlay = bingoCardTilesInPlay;
+    this.saveBingoCardData(this.bingoCardData);
   }
+
+  public getBingoCardData() {
+    return this.database.getDocument('bingoCardData');
+  }
+
+  public getBingoCardTilesInPlay() {
+    return this.bingoCardData.tilesInPlay;
+  }
+  
+  public getPlayForBlackout() {
+    return this.bingoCardData.playForBlackout;
+  }
+
+  public savePlayForBlackout(playForBlackout: boolean) {
+    this.bingoCardData.playForBlackout = playForBlackout;
+    this.saveBingoCardData(this.bingoCardData);
+  }
+
+  public shuffleBingoCardTilesInPlay(tilesInPlay) {
+    return new Promise((resolve, reject) => {
+      this.shuffleArray(tilesInPlay);
+      this.saveBingoGameData(tilesInPlay);
+      resolve(tilesInPlay);
+    });
+  }
+
+  private shuffleArray(array) {
+    let currentIndex = array.length;
+    let temporaryValue;
+    let randomIndex;
+  
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+  
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+  
+    return array;
+  }
+
 }

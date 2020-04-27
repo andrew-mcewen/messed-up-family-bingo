@@ -5,6 +5,9 @@ import { DrawerTransitionBase, RadSideDrawer, SlideInOnTopTransition } from "nat
 import { filter } from "rxjs/operators";
 import * as app from "tns-core-modules/application";
 
+import { registerElement } from "nativescript-angular/element-registry";
+registerElement("Emoji", () => require("nativescript-emoji").Emoji);
+
 @Component({
     selector: "ns-app",
     templateUrl: "app.component.html"

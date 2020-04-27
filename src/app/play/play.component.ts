@@ -9,36 +9,43 @@ import { CardService } from '../card.service';
 import { ActionBar } from "tns-core-modules/ui/action-bar/action-bar";
 import { EventData } from "tns-core-modules/ui/core/bindable/bindable";
 
+interface BingoCardTile {
+    active: boolean,
+    inPlay: boolean,
+    text: string
+}
+
 @Component({
     selector: "Play",
     templateUrl: "./play.component.html",
     styleUrls: ["./play.component.scss"]
 })
+
 export class PlayComponent implements OnInit, AfterViewInit {    
     
     @ViewChild("playActionBar", { static: false }) playActionBarRef: ElementRef;
     @ViewChild("pageContent", { static: false }) pageContentRef: ElementRef;
     
     orientation: string;
-    landscape: boolean;
+    landscape: boolean;    
     actionBar: ActionBar;
-    myCardValues: Array<object>;
-    defaultCard: any;
-    myCard: any;
-    freeTileActive: boolean;
     
-    
-    constructor(private page: Page, private cardService: CardService) {
-        // Use the component constructor to inject providers.
-    }
-    
-    ngAfterViewInit(): void {
-    }
+    bingoBoardLoaded: boolean;
+    bingoCardTilesInPlay: Array<BingoCardTile>;
+    playForBlackout: boolean;
 
-    ngOnInit(): void {        
+    constructor(private page: Page, private cardService: CardService) {
+        this.bingoCardTilesInPlay = cardService.getBingoCardTilesInPlay();
+        this.playForBlackout = cardService.getPlayForBlackout();
+
+        console.dir(this.bingoCardTilesInPlay.length, {depth: null, colors: true});
+    }
+    
+    ngAfterViewInit(): void { }
+
+    ngOnInit(): void {
         app.on(app.orientationChangedEvent, (args) => {
-            this.orientation = args.newValue;
-            console.log('New Orientation: ', args.newValue);            
+            this.orientation = args.newValue;      
             
             if(this.orientation == 'landscape'){
                 console.log('Orientation is now landscape: ', this.orientation);
@@ -50,26 +57,10 @@ export class PlayComponent implements OnInit, AfterViewInit {
                 this.page.actionBarHidden = false;
             }
         });
-        
-        this.myCardValues = [];
-        this.myCard = this.cardService.getMyCard();
-        const self = this;
-
-        //console.log('My tiles: ', JSON.stringify(this.myCard.tiles, null, 2));
-
-        this.myCard.tileSets.forEach(function(tileSet){
-            tileSet.tiles.forEach(function(tile){
-                if(tile.inPlay == true){
-                    self.myCardValues.push(tile);
-                }
-            })
-        });
     }
 
     onActionBarLoaded(args: EventData): void {
-        console.log('Action bar loaded!');
-        this.actionBar = args.object as ActionBar;
-        console.log('ActionBar: ', this.actionBar);        
+        this.actionBar = args.object as ActionBar;    
     }
 
     onDrawerButtonTap(): void {
@@ -77,64 +68,88 @@ export class PlayComponent implements OnInit, AfterViewInit {
         sideDrawer.showDrawer();
     }
 
-    toggleTile(tile): void {
+    toggleTile(tile: BingoCardTile): void {
         tile.active = !tile.active;
-        this.cardService.saveCard(this.myCard.id, this.myCard)
-        this.checkForBingo();
-    }
-
-    toggleFreeTile(freeTile): void {
-        freeTile.active = !freeTile.active;
-        this.cardService.saveCard(this.myCard.id, this.myCard)
+        this.cardService.saveBingoGameData(this.bingoCardTilesInPlay)
         this.checkForBingo();
     }
 
     checkForBingo(): void {
-        let scoredBingo;
+        console.log('Checking for bingo...');
+        console.log('Go for blackout: ', this.playForBlackout);
+        let scoredBingo: boolean;
 
-        //4 squares
-        if(this.myCard.tiles[0].active
-            && this.myCard.tiles[4].active 
-            && this.myCard.tiles[19].active 
-            && this.myCard.tiles[23].active) {
-                scoredBingo = true;
-        }
-
-        //Diagonal
-        if(this.myCard.tiles[0].active
-            && this.myCard.tiles[6].active 
-            && this.myCard.freeTile.active == true
-            && this.myCard.tiles[17].active 
-            && this.myCard.tiles[23].active) {
-                scoredBingo = true;
-        }
-
-        //Diagonal
-        if(this.myCard.tiles[4].active
-            && this.myCard.tiles[8].active
-            && this.myCard.freeTile.active == true
-            && this.myCard.tiles[15].active 
-            && this.myCard.tiles[19].active) {
-                scoredBingo = true;
-        }
-
-        if(scoredBingo){
-            dialogs.confirm({
-                title: "BINGO",
-                message: "Yikes. This family is messed up.",
-                okButtonText: "HERE WE GO AGAIN",
-            }).then(result => {
-                this.clearCard();
-            });
+        if(!this.playForBlackout){
+            //4 squares
+            if(this.bingoCardTilesInPlay[0].active
+                && this.bingoCardTilesInPlay[4].active 
+                && this.bingoCardTilesInPlay[20].active 
+                && this.bingoCardTilesInPlay[24].active) {
+                    scoredBingo = true;
+            }
+    
+            //Diagonal
+            if(this.bingoCardTilesInPlay[0].active
+                && this.bingoCardTilesInPlay[6].active
+                && this.bingoCardTilesInPlay[12].active
+                && this.bingoCardTilesInPlay[18].active
+                && this.bingoCardTilesInPlay[24].active) {
+                    scoredBingo = true;
+            }
+    
+            //Diagonal
+            if(this.bingoCardTilesInPlay[4].active
+                && this.bingoCardTilesInPlay[8].active
+                && this.bingoCardTilesInPlay[12].active
+                && this.bingoCardTilesInPlay[16].active 
+                && this.bingoCardTilesInPlay[20].active) {
+                    scoredBingo = true;
+            }
+    
+            if(scoredBingo){
+                dialogs.confirm({
+                    title: "BINGO!",
+                    message: "Yikes. What a messed up family.",
+                    okButtonText: "PLAY AGAIN",
+                    cancelButtonText: "GO FOR BLACKOUT",
+                }).then(result => {
+                    console.log(result);
+                    if(result) {
+                        this.clearCard();
+                    } else {
+                        this.playForBlackout = true;
+                        this.cardService.savePlayForBlackout(true);
+                    }
+                });
+            }
+        } else {
+            if(this.bingoCardTilesInPlay.filter(tile => tile.active == true).length == 25) {
+                dialogs.confirm({
+                    title: "BLACKOUT!",
+                    message: "Yikes. What a messed up family.",
+                    okButtonText: "PLAY AGAIN",
+                }).then(result => {
+                    this.clearCard();
+                    this.playForBlackout = false;
+                    this.cardService.savePlayForBlackout(false);
+                });
+            }
         }
     }
 
+    async shuffle(): Promise<any> {
+        await this.cardService.shuffleBingoCardTilesInPlay(this.bingoCardTilesInPlay);
+
+        this.bingoCardTilesInPlay = this.cardService.getBingoCardTilesInPlay();
+        this.cardService.saveBingoGameData(this.bingoCardTilesInPlay);
+    }
+
     clearCard(): void {
-        for(let tile of this.myCard.tiles){
+        for(let tile of this.bingoCardTilesInPlay){
             tile.active = false;
         }
-        this.myCard.freeTile.active = false;
-        this.cardService.saveCard(this.myCard.id, this.myCard)
+
+        this.cardService.saveBingoGameData(this.bingoCardTilesInPlay);
         this.checkForBingo();
     }
 }

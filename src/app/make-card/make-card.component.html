@@ -21,12 +21,13 @@
 			</StackLayout>
         </ng-template>
         
-        <ng-template let-i="index" let-tile="item" acTemplateKey="content" class="list-view-item">
-			<StackLayout>
-				<Label class="card-item" [ngClass]="{'active': tile.inPlay == true }" [text]="tile.text" (tap)="onItemTap(tile)"></Label>
-			</StackLayout>
+        <ng-template let-i="index" let-tile="item" acTemplateKey="content">
+			<GridLayout columns="40, *" class="card-item list-view-item" [ngClass]="{'active': tile.inPlay == true }">
+                <Label col="0" *ngIf="tile.inPlay == true" class="fas" text="&#xf00c;"></Label>               
+				<Label col="1" [text]="tile.text" (tap)="onItemTap(tile)" textWrap="true"></Label>
+			</GridLayout>
         </ng-template>        
 	</Accordion>
         
-    <FAB *ngIf="tileCount == 24" (tap)="saveCard()" text="play" rippleColor="#f1f1f1" class="fab-button"></FAB>
+    <FAB *ngIf="tileCount == 24" (tap)="saveCard()" text="PLAY" rippleColor="#f1f1f1" class="fab-button"></FAB>
 </GridLayout>

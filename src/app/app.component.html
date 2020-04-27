@@ -7,23 +7,23 @@
         </StackLayout>
     
         <ScrollView row="1" class="sidedrawer-content">
-            <StackLayout>
-                <GridLayout columns="30, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/play')" (tap)="onNavItemTap('/play')">
+            <StackLayout class="menu-container">
+                <GridLayout columns="50, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/play')" (tap)="onNavItemTap('/play')">
                     <Label col="0" text="&#xf11a;" class="fa"></Label>
-                    <Label col="1" text="play" class="p-r-10"></Label>
+                    <Label col="1" text="play bingo" class="p-r-10"></Label>
                 </GridLayout>
 
-                <GridLayout columns="30, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/make-card')" (tap)="onNavItemTap('/make-card')">
+                <GridLayout columns="50, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/make-card')" (tap)="onNavItemTap('/make-card')">
                     <Label col="0" text="&#xf0c8;" class="fa"></Label>
-                    <Label col="1" text="make my card" class="p-r-10"></Label>
+                    <Label col="1" text="make a card" class="p-r-10"></Label>
                 </GridLayout>
 
-                <GridLayout columns="30, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/about')" (tap)="onNavItemTap('/about')">
+                <GridLayout columns="50, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/about')" (tap)="onNavItemTap('/about')">
                     <Label col="0" text="&#xf059;" class="fa"></Label>
                     <Label col="1" text="about this game" class="p-r-10"></Label>
                 </GridLayout>
 
-                <GridLayout columns="30, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/terms')" (tap)="onNavItemTap('/terms')">
+                <GridLayout columns="50, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/terms')" (tap)="onNavItemTap('/terms')">
                     <Label col="0" text="&#xf516;" class="fas"></Label>
                     <Label col="1" text="terms & disclaimers" class="p-r-10"></Label>
                 </GridLayout>
