@@ -21,29 +21,28 @@ interface BingoCardTile {
     styleUrls: ["./play.component.scss"]
 })
 
-export class PlayComponent implements OnInit, AfterViewInit {    
+export class PlayComponent implements OnInit {    
     
     @ViewChild("playActionBar", { static: false }) playActionBarRef: ElementRef;
     @ViewChild("pageContent", { static: false }) pageContentRef: ElementRef;
     
     orientation: string;
     landscape: boolean;    
+    
     actionBar: ActionBar;
     
-    bingoBoardLoaded: boolean;
     bingoCardTilesInPlay: Array<BingoCardTile>;
     playForBlackout: boolean;
 
     constructor(private page: Page, private cardService: CardService) {
-        this.bingoCardTilesInPlay = cardService.getBingoCardTilesInPlay();
-        this.playForBlackout = cardService.getPlayForBlackout();
-
-        console.dir(this.bingoCardTilesInPlay.length, {depth: null, colors: true});
+        console.log('Constructor');
+        this.bingoCardTilesInPlay = this.cardService.getBingoCardTilesInPlay();
+        this.playForBlackout = this.cardService.getPlayForBlackout();
     }
-    
-    ngAfterViewInit(): void { }
 
     ngOnInit(): void {
+        console.log('OnInit');
+
         app.on(app.orientationChangedEvent, (args) => {
             this.orientation = args.newValue;      
             
@@ -68,13 +67,13 @@ export class PlayComponent implements OnInit, AfterViewInit {
         sideDrawer.showDrawer();
     }
 
-    toggleTile(tile: BingoCardTile): void {
+    async toggleTile(tile: BingoCardTile): Promise<any> {
         tile.active = !tile.active;
-        this.cardService.saveBingoGameData(this.bingoCardTilesInPlay)
+        await this.cardService.saveBingoGameData(this.bingoCardTilesInPlay);
         this.checkForBingo();
     }
 
-    checkForBingo(): void {
+    async checkForBingo(): Promise<any> {
         console.log('Checking for bingo...');
         console.log('Go for blackout: ', this.playForBlackout);
         let scoredBingo: boolean;
@@ -112,13 +111,12 @@ export class PlayComponent implements OnInit, AfterViewInit {
                     message: "Yikes. What a messed up family.",
                     okButtonText: "PLAY AGAIN",
                     cancelButtonText: "GO FOR BLACKOUT",
-                }).then(result => {
-                    console.log(result);
+                }).then(async (result) => {
                     if(result) {
                         this.clearCard();
                     } else {
                         this.playForBlackout = true;
-                        this.cardService.savePlayForBlackout(true);
+                        await this.cardService.savePlayForBlackout(true);
                     }
                 });
             }
@@ -128,25 +126,23 @@ export class PlayComponent implements OnInit, AfterViewInit {
                     title: "BLACKOUT!",
                     message: "Yikes. What a messed up family.",
                     okButtonText: "PLAY AGAIN",
-                }).then(result => {
+                }).then(async (result) => {
                     this.clearCard();
                     this.playForBlackout = false;
-                    this.cardService.savePlayForBlackout(false);
+                    await this.cardService.savePlayForBlackout(false);
                 });
             }
         }
     }
 
     async shuffle(): Promise<any> {
-        await this.cardService.shuffleBingoCardTilesInPlay(this.bingoCardTilesInPlay);
-
-        this.bingoCardTilesInPlay = this.cardService.getBingoCardTilesInPlay();
-        this.cardService.saveBingoGameData(this.bingoCardTilesInPlay);
+        this.bingoCardTilesInPlay = await this.cardService.shuffleBingoCardTilesInPlay(this.bingoCardTilesInPlay);
+        console.log(`How many ${this.bingoCardTilesInPlay.length}`);
     }
 
     clearCard(): void {
-        for(let tile of this.bingoCardTilesInPlay){
-            tile.active = false;
+        for(let tileIndex in this.bingoCardTilesInPlay){
+            this.bingoCardTilesInPlay[tileIndex].active = false;
         }
 
         this.cardService.saveBingoGameData(this.bingoCardTilesInPlay);

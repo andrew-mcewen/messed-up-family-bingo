@@ -22,22 +22,22 @@ import { Repeater } from "tns-core-modules/ui/repeater";
 })
 export class MakeCardComponent implements OnInit {
 
-    myCard: any;
+    bingoCardData: any;
     tileCount: number;
 
     @ViewChild('accordion', { static: false}) accordion: ElementRef;
 
 
-    constructor(private cardService: CardService, private routerExtensions: RouterExtensions) {}
+    constructor(private cardService: CardService, private routerExtensions: RouterExtensions) {
+        this.bingoCardData = this.cardService.getBingoCardData();
+        //console.log('My card: ', JSON.stringify(this.bingoCardData.tilesInPlay.length, null, 2));
+    }
 
     ngOnInit(): void {
         this.tileCount = 0;
 
-        this.myCard = this.cardService.getBingoCardData();
-        console.log('My card: ', JSON.stringify(this.myCard.tilesInPlay.length, null, 2));
-
         const self = this;
-        this.myCard.tileSets.forEach(function(tileSet){
+        this.bingoCardData.tileSets.forEach(function(tileSet){
             tileSet.tiles.forEach(function(tile){
                 if(tile.inPlay == true){
                     self.tileCount++;
@@ -75,13 +75,14 @@ export class MakeCardComponent implements OnInit {
             });
         }
         
-        this.cardService.saveBingoCardData(this.myCard);
+        this.cardService.saveBingoCardData(this.bingoCardData);
     }
 
-    public saveCard(): void {
+    public async saveCard(): Promise<any> {
         let tilesInPlay = [];
+        const freeTile = {active: false, inPlay: true, text: 'free'};
 
-        this.myCard.tileSets.forEach(function(tileSet){
+        this.bingoCardData.tileSets.forEach(function(tileSet){
             tileSet.tiles.forEach(function(tile: any){
                 if(tile.inPlay){
                     tilesInPlay.push(tile);
@@ -89,17 +90,17 @@ export class MakeCardComponent implements OnInit {
             });
         });
 
-        tilesInPlay.splice(12, 0, {active: false, inPlay: true, text: 'free'});
+        tilesInPlay.splice(12, 0, freeTile);
 
-        this.myCard.tilesInPlay = tilesInPlay;
-        this.cardService.saveBingoCardData(this.myCard);
-        console.log('Card saved!!!');
-
+        this.bingoCardData.tilesInPlay = tilesInPlay;
+        this.bingoCardData = await this.cardService.saveBingoCardData(this.bingoCardData);
+        
         this.routerExtensions.navigate(['/play'], {
             transition: {
                 name: "fade"
             }
         });
+        
     }
 
     public headerTemplateSelector = (item: any, index: number, items: any) => {

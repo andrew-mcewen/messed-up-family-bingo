@@ -1,4 +1,4 @@
-<GridLayout height="auto" class="page page-content">
+<GridLayout class="page page-content">
     <ActionBar class="action-bar" title="">
         <!-- 
         Use the NavigationButton as a side-drawer button in Android
@@ -14,7 +14,7 @@
         <Label text="{{tileCount}} / 24"></Label>    
     </ActionBar>
 
-    <Accordion #accordion height="100%" allowMultiple="true" childItems="tiles" [items]="myCard.tileSets">
+    <Accordion #accordion height="100%" allowMultiple="true" childItems="tiles" [items]="bingoCardData.tileSets">
 		<ng-template let-i="index" let-tileSet="item" acTemplateKey="title">
 			<StackLayout>
 				<Label class="card-items-category" [text]="tileSet.name"></Label>
